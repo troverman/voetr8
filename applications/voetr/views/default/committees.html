@@ -1,0 +1,21 @@
+{{extend 'layout.html'}}
+
+<style>
+
+</style>
+
+
+<h1>committees</h1><hr><br>
+
+
+<div id="official-committee-list" style="margin-left:15px;">
+    
+    {{for committee in default_parent_committee_list.sort(lambda row: row.title):}}
+    	<h5><a href="committee/{{=committee['title'].replace(" ","-")}}">{{=committee['title']}}</a></h5>
+    {{pass}}
+    
+</div>
+<div style="margin-left:15px;">
+	<br>
+	<button class="btn">+ new committee</button>
+</div>

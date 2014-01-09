@@ -1,0 +1,62 @@
+{{extend 'layout.html'}}
+<style>
+        
+    #contentwrapper{width: 100%;}    
+    #content {}
+    #right { 
+        float: right;
+        width: 255px;
+        border-left:1px solid rgb(238,238,238);
+		padding-left:15px;
+		padding-right:15px;
+    }
+    #left {
+		float: left;
+		width: 175px;
+		border-right:1px solid rgb(238,238,238);
+		margin-left:15px;
+    }    
+    
+</style>
+
+<div id="left">
+	 {{for child in selected_committee_children.sort(lambda row: row.title):}}
+        <h5><a href="/committee/{{=child['title'].replace(" ","-")}}">{{=child['title']}}</a></h5>
+    {{pass}}
+</div>
+
+<div id="right">
+    <button class="btn">+ new thread</button><br>
+    <button class="btn">join</button><br>
+    <button class="btn">hello</button><br>
+    <button class="btn">hello</button><br>
+
+</div>
+
+<div id="contentwrapper">
+    <div id="content">
+        
+        <h1>{{=request.args(0)}}</h1>
+        <p class="lead">this is the committee description area</p>        
+        <h3><a>statutes</a></h3>
+        <h3><a>constitution</a></h3>
+        <h3><a>bills</a></h3>
+        <h3><a>members</a></h3>
+        <h4>representatives</a></h4>
+        <h3><a>settings</a></h3>
+        <br><br>
+        <h3>statutes</h3>
+        {{for statute in statutes_by_parent:}}
+            
+            <a href="/">{{=statute['title']}}</a>
+            <p>{{=statute['description']}}</p>
+            
+        {{pass}}
+        <a>+ new thread</a><br><br>
+        {{for x in range(10):}}
+            <h4><a>thread {{=x}}</a></h4>
+        {{pass}}
+        <br><br>
+    
+    </div>
+</div>
