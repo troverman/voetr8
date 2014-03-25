@@ -1,118 +1,177 @@
 {{extend 'layout.html'}}
+<style>
+#index-header{
+    background-color:rgb(247,247,247);
+    border-bottom:1px solid rgb(225, 225, 225);
+    padding-top:15px;
+    padding-bottom:15px;
+}
+#index-header-container{
+    margin-left:5%;
+    margin-right:5%;
+}
+#share-footer{
+    background-color:rgb(247,247,247);
+    border-top:1px solid rgb(225, 225, 225);
+}
+#share-footer-container{margin-left:5%;margin-right:5%;}
+</style>
+{{if auth.is_logged_in():}}
+    <h1>you are logged in</h1>
+
+    {{for x in range(100):}}
+        <h1>{{=x}}</h1>
+    {{pass}}
+{{else:}}
+
+<div id="index-header">
+    <div id="index-header-container">
+        <div id="header-1">
+            <div style="float:left;">
+                <h2>empowering the internet</h2>
+                <h3>seeing past partisan politics</h3>
+                <h3>leadership generator</h3>
+                <h3>the decision making cloud</h3>
+                <h3>democratizing power</h3>
+                <h3>direct change</h3>
+            </div>
+            <div style="float:right;">
+                {{=auth.register()}}
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div id="header-2" style="display:none;">
+                <h2>this is a picture</h2>
+            <div style="clear:both;"></div>
+        </div>
+
+    </div>
+</div>
 <div class="centered-width">
-<br>
-<h3>empowering the internet</h3>
-<h3>seeing past partisan politics</h3>
-<br><br>
-<!--
-<div class="well">testing</div>
+    <br>
+    <br>
 
-<p class="lead">voetr empowers the internet</p>
-<p class="lead">crowd sourced budgets; where are we placing our value?</p>
+    <div>
+        <table style="margin-left:auto;margin-right:auto">
+            <tr>
+                <td><p class="lead" style="text-align:center">great collaboration starts with communication.</p></td>
+                <td><p class="lead" style="text-align:center">empowering the internet</p></td>
+                <td><p class="lead" style="text-align:center">seeing past partisan politics</p></td>
+                <td><p class="lead" style="text-align:center">the decision making cloud</p></td>
+                <td><p class="lead" style="text-align:center">when a fire starts to burn, it starts to spread.<span class="icon-fire"></span></p></td>
+                <td><p class="lead" style="text-align:center">powerful bylaw creation system</p></td>
+                <td><p class="lead" style="text-align:center">organize vast amounts of political data</p></td>
+                <td><p class="lead" style="text-align:center">identify issues</p></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
 
-<div class="well">
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+        	<li class="active"><a href="#tab1" data-toggle="tab">about</a></li>
+        	<li><a href="#tab2" data-toggle="tab">faq</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="tab1">
+                <p class="lead">voetr is open source, crowd owned, givingfor enabled, transparent, and awesome.</p>
+                <p class="lead">voetr is a way for anyone to get involved and to make decisions.</p>
+                <p class="lead">voetr organically identifies issues and establishes leadership structures.</p>
+                <p class="lead">where should we be going? we are all making this choice.</p>
+                PICTURE
+                <p class="lead">the internet can be so much more powerful.</p>
+                <p class="lead">let's do this.</p>
+                <p class="lead">powerful bylaw creation system</p>
+                PICTURE DESCRIBING
+                <p class="lead">crowd sourced budgets; where are we placing our value?</p>
+                <p class="lead">what is voetr?</p>
+                <p class="lead">now is the time for change!</p>
+                <p class="lead">now is the time to empower ourselves and realize that we can make a difference</p>
+                <p class="lead">now is the time to really think about what is important</p>
+                <p class="lead">voetr empowers the internet to spark tangible differences. it only means so much as the value that it is given.</p>
+            </div>
+            <div class="tab-pane" id="tab2">
 
-	<p class="lead">what is voetr?</p>
-	<p class="lead">now is the time for change!</p>
-	<p class="lead">now is the time to empower ourselves and realize that we can make a difference</p>
-	<p class="lead">now is the time to really think about what is important</p>
-	<p class="lead">let's stop being so petty, ignorant, and angry.</p>
-	<p class="lead">let's help our fellow man.</p>
-	
-	<p class="lead">voetr empowers the internet to spark tangible differences. it only means so much as the value that it is given.</p>
-	<p class="lead">its power comes from you. just like governments. when people begin to wake up to this calling of life. of this <a href="www.evolvedus.com">evolution</a> that we are facing as a species.</p>
-    <p class="lead">we must continus to ask the tocugh questions. we must accept responsibility as a group, not as an individual</p>
-    
+                <p>what is voetr?</p>
+                <p>what is the mission?</p>
+                <p>what is a committee?</p>
+                <p>what is a thread?</p>
+                <p>what is a tag?</p>
+                <p>what is a bylaw?</p>
+                <p>what are some of the committee types or settings?</p>
+                <p>can elections be held?</p>
+                <p>how are bills introduced?</p>
+                <p>what is the discover page?</p>
+                <p>what is thre trending page?</p>
+                <p>how can I get envolved?</p>
+                <p>how can voetr help candidates?</p>
+
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <table>
+        <tr>
+            <td>
+                <h5>trending polls</h5>
+                <div style="margin-left:15px;">
+                    {{for committee in committee_list:}}
+                        <a href="/committee/{{=committee['url']}}/">{{=committee['title']}}</a><br>
+                    {{pass}}
+                </div>
+            </td>
+            <td>
+                <h5>trending committees</h5>
+                <div style="margin-left:15px;">
+                    {{for committee in committee_list:}}
+                        <a href="/committee/{{=committee['url']}}/">{{=committee['title']}}</a><br>
+                    {{pass}}
+                </div>
+            </td>
+            <td>
+                <h5>trending threads</h5>
+                <div style="margin-left:15px;">
+                    {{for committee in committee_list:}}
+                        <a href="/committee/{{=committee['url']}}/">{{=committee['title']}}</a><br>
+                    {{pass}}
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
 </div>
 
--->
-
-<br>
-
-<div class="btn-group">
-    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-        test
-        <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-        <li><a tabindex="-1" href="#">Action</a></li>
-        <li><a tabindex="-1" href="#">Another action</a></li>
-        <li><a tabindex="-1" href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a tabindex="-1" href="#">Separated link</a></li>
-	</ul>
-</div>
-
-<br><br>
-
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-    	<li class="active"><a href="#tab1" data-toggle="tab">Section 1</a></li>
-    	<li><a href="#tab2" data-toggle="tab">Section 2</a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
-        	<p>I'm in Section 1.</p>
+<div id="share-footer">
+    <div id="share-footer-container">
+        <div style="float:left;">
+            <h4><a id="share-popover" class="btn btn-success" rel="popover" data-content="<h1>test</h1><p>hi</p>" data-original-title="share">spread the word</a></h4>
+        
+            <p>like, share..</p>
+            <p class="lead">{{=member_len}} voetrs and counting</p>
         </div>
-        <div class="tab-pane" id="tab2">
-        	<p>Howdy, I'm in Section 2.</p>
+        <div style="float:right;">
+            <h3>get the app</h3>
+            <a href=""><img class="opacity-img" style="height:48px;" src="/voetr/static/images/app_store_icon.png" /></a>
+            <a href=""><img class="opacity-img" style="height:48px;" src="/voetr/static/images/android_marketplace_icon.png" /></a>
         </div>
+        <div style="clear:both;"></div>
     </div>
 </div>
 
-<br><br>
+<br>
+<br>
+<br>
 
-<div class="tabbable tabs-left">
-    <ul class="nav nav-tabs">
-    	<li class="active"><a href="#tab3" data-toggle="tab">Section 1</a></li>
-    	<li><a href="#tab4" data-toggle="tab">Section 2</a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab3">
-        	<p>I'm in Section 1.</p>
-        </div>
-        <div class="tab-pane" id="tab4">
-        	<p>Howdy, I'm in Section 2.</p>
-        </div>
-    </div>
-</div>
+<script>
+    $(function (){
+        $("#share-popover").popover({ html : true });
+    });
+</script>
 
+{{pass}}
 
-<h5>trending polls</h5>
-<div style="margin-left:15px;">
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-</div>
-<h5>trending committees</h5>
-<div style="margin-left:15px;">
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-</div>
-<h5>trending threads</h5>
-<div style="margin-left:15px;">
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-</div>
-<h5>statutes</h5>
-<div style="margin-left:15px;">
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-    <p class="lead">this is a test</p>
-</div>
-
-<br><br>
-
-<h3>It's about time we grew up. WHAT IS GOING ON?!</h3>
-<h4><a> spread the word</a></h4>
-<p class="lead">over 1,000,000,000,000 voetrs and counting</p>
-
-<div style="float:right;">
-    <h1>get the app</h1>
-    <a href=""><img class="opacity-img" style="height:48px;" src="/voetr/static/images/app_store_icon.png" /></a>
-    <a href=""><img class="opacity-img" style="height:48px;" src="/voetr/static/images/android_marketplace_icon.png" /></a>
-</div>
-</div>
-<br><br><br><br><br><br>

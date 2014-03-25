@@ -1,21 +1,65 @@
 {{extend 'layout.html'}}
 
-<style>
-
+<style>     
+    #contentwrapper{width: 100%;}    
+    #content {}
+    #right { 
+        float: right;
+        width: 255px;
+        border-left:1px solid rgb(238,238,238);
+		padding-left:15px;
+		padding-right:15px;
+    }
+    #left {
+		float: left;
+		width: 175px;
+		border-right:1px solid rgb(238,238,238);
+		margin-left:15px;
+    }  
+    #committee-list{margin-left:15px;}
+    #reccomended-committees{
+		margin-left:15px;
+		border:1px solid rgb(100,100,100);
+		background-color:rgb(200,200,200);
+    }  
 </style>
 
+<div id="left">
+	committee filters<br>
+	tags<br>
+	1<br>
+	2<br>
+	3<br>
+	4<br>
+</div>
+
+<div id="right">
+	<button class="btn">+ new committee</button>
+</div>
 
 <h1>committees</h1><hr><br>
 
+<div id="contentwrapper">
+    <div id="content">
+    	
+		<div id="reccomended-committees">
+			{{for committee in rand_committee_list:}}
+				<h5><a href="/committee/{{=committee['url']}}">{{=committee['title']}}</a></h5>
+			{{pass}}
+		</div>
 
-<div id="official-committee-list" style="margin-left:15px;">
-    
-    {{for committee in default_parent_committee_list.sort(lambda row: row.title):}}
-    	<h5><a href="committee/{{=committee['title'].replace(" ","-")}}">{{=committee['title']}}</a></h5>
-    {{pass}}
-    
+		<div id="committee-list">
+		    {{for committee in committee_list:}}
+		    	<h5><a href="/committee/{{=committee['url']}}/">{{=committee['title']}}</a></h5>
+		    {{pass}}
+		</div>
+
+	</div>
 </div>
-<div style="margin-left:15px;">
-	<br>
-	<button class="btn">+ new committee</button>
-</div>
+
+
+
+<br>
+<br>
+<br>
+<br>

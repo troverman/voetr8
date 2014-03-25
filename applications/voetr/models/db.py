@@ -1,6 +1,14 @@
+################################################################
+####db.py#######################################################
+################################################################
+
 ## if SSL/HTTPS is properly configured and you want all HTTP requests to
 ## be redirected to HTTPS, uncomment the line below:
 # request.requires_https()
+
+################################
+####database_conntection########
+################################  
 
 ## connect to Google BigTable (optional 'google:datastore://namespace')
 db = DAL('google:datastore')
@@ -21,46 +29,115 @@ from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
-## create all tables needed by auth if not custom tables
 auth.define_tables(username=True, signature=False)
 
 ## configure email
 mail = auth.settings.mailer
 mail.settings.server = 'logging' or 'smtp.gmail.com:587'
-mail.settings.sender = 'you@gmail.com'
-mail.settings.login = 'username:password'
+mail.settings.sender = 'mail@voetr.com'
+mail.settings.login = 'troverman:admin'
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
+db.auth_user.first_name.readable = False
+db.auth_user.last_name.readable = False 
 
+################################################################
+####database_tables#############################################
+################################################################
+
+################################
+####bylaw#######################
+################################ 
+db.define_table('bylaw',
+    Field('title','string'),
+    Field('content','string'),
+    Field('committee_id_array','list:string'),
+)
+
+################################
+####bylaw_relationship##########
+################################ 
+db.define_table('bylaw_relationship',
+    Field('relationship_type','string'),
+    Field('bylaw_id_array','list:string'),
+)
+
+################################
+####bylaw_tag###################
+################################ 
+db.define_table('bylaw_tag',
+    Field('bylaw_id','string'),
+    Field('tag','string'),
+)
+
+################################
+####committee###################
+################################ 
 db.define_table('committee',
     Field('url','string'),
     Field('title','string'),
     Field('description','string'),
-    Field('parent_committee_id','reference committee'),
 )
 
-db.define_table('statute',
+################################
+####committee_member############
+################################ 
+db.define_table('committee_member',
+    Field('committee_id','string'),
+    Field('member_id','string'),
+)
+
+################################
+####committee_member_detail#####
+################################ 
+db.define_table('committee_member_detail',
+    Field('committee_id','string'),
+    Field('member_id','string'),
+    Field('detail','string'),
+    Field('detail_type','string'),
+)
+
+################################
+####committee_position##########
+################################ 
+db.define_table('committee_position',
+    Field('committee_id','string'),
     Field('title','string'),
-    Field('description','string'),
-    Field('parent_committee_id','reference committee'),
 )
 
-db.define_table('article',
+################################
+####committee_position_detail###
+################################ 
+db.define_table('committee_position_detail',
+    Field('committee_position_id','string'),
+    Field('detail','string'),
+    Field('detail_type','string'),
+)
+
+################################
+####committee_relationship######
+################################ 
+db.define_table('committee_relationship',
+    Field('relationship_type','string'),
+    Field('committee_id_array','list:string'),
+)
+
+################################
+####thread######################
+################################ 
+db.define_table('thread',
+    Field('url','string'),
     Field('title','string'),
-    Field('description','string'),
-    Field('parent_statute_id','reference statute'),
+    Field('content','string'),
 )
 
-db.define_table('bylaw',
-    Field('title','string'),
-    Field('bylaw','string'),
-    Field('parent_statute_id','reference statute'),
-    Field('parent_article_id','reference article'),
-)
-
-db.define_table('bill', 
-    Field('parent_committee_id','reference committee'), 
+################################
+####thread_tag##################
+################################ 
+db.define_table('thread_tag',
+    Field('thread_id','string'),
+    Field('tag','string'),
 )

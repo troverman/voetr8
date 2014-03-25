@@ -31,15 +31,20 @@ def committee():
     if request.args(0) is None:
         redirect(URL('committees'))
 
-    selected_committee = db(db.committee.title==request.args(0).replace("-"," ")).select()
-    selected_committee_children = db(db.committee.parent_committee_id == selected_committee[0]['id']).select()    
-    statutes_by_parent = db(db.statute.parent_committee_id == selected_committee[0]['id']).select()
-    
+    committee_member_array=[]
+    selected_committee = db(db.committee.url == request.args(0)).select()
+    selected_committee_positions = db(db.committee_position.committee_id == selected_committee[0]['id']).select()
+
+    if request.args(1) == 'members':
+        committee_members = db(db.committee_member.committee_id == selected_committee[0]['id']).select()
+        for committee_member in committee_members:
+            committee_member_array.append(db(db.auth_user.id == committee_member['member_id']).select()[0])
+
     return dict(
     
         selected_committee=selected_committee,
-        selected_committee_children=selected_committee_children,
-        statutes_by_parent=statutes_by_parent,
+        selected_committee_positions=selected_committee_positions,
+        committee_member_array=committee_member_array,
     
     )
 
@@ -48,10 +53,15 @@ def committee():
 ################################
 def committees():
     
-    default_parent_committee_list = db(db.committee.parent_committee_id==0).select() 
-    
+    committee_list = db(db.committee).select().as_list()
+    import random
+    random.shuffle(committee_list)
+    rand_committee_list = committee_list[0:5]
+    random.shuffle(committee_list)
+
     return dict(
-        default_parent_committee_list=default_parent_committee_list   
+        committee_list=committee_list,
+        rand_committee_list=rand_committee_list, 
     )
 
 ################################
@@ -87,7 +97,24 @@ def feed():
 ################################       
 def index():
 
+    import random
+    committee_list = db(db.committee).select().as_list() 
+    random.shuffle(committee_list)
+    committee_list = committee_list[0:5]
+
+    member_len = len(db(db.auth_user).select().as_list())
+
     response.flash = T("let's change the world! :)")
+    return dict(
+        committee_list=committee_list,
+        member_len=member_len,
+        )
+
+################################
+####logout######################
+################################
+def logout():
+    auth.logout()
     return dict()
 
 ################################

@@ -1,8 +1,8 @@
 {{extend 'layout.html'}}
-<style>
-        
-    #contentwrapper{width: 100%;}    
-    #content {}
+<style>     
+    #content{width: 100%;margin-left:6%;}    
+    #committee-detail-area{border:1px solid rgb(211,217,231);background-color:rgb(247,247,247);}
+    #committee-title-area{}
     #right { 
         float: right;
         width: 255px;
@@ -16,47 +16,59 @@
 		border-right:1px solid rgb(238,238,238);
 		margin-left:15px;
     }    
-    
 </style>
-
-<div id="left">
-	 {{for child in selected_committee_children.sort(lambda row: row.title):}}
-        <h5><a href="/committee/{{=child['title'].replace(" ","-")}}">{{=child['title']}}</a></h5>
-    {{pass}}
-</div>
-
+{{if request.args(1) is None:}}
 <div id="right">
     <button class="btn">+ new thread</button><br>
     <button class="btn">join</button><br>
-    <button class="btn">hello</button><br>
-    <button class="btn">hello</button><br>
-
 </div>
-
-<div id="contentwrapper">
-    <div id="content">
-        
-        <h1>{{=request.args(0)}}</h1>
-        <p class="lead">this is the committee description area</p>        
-        <h3><a>statutes</a></h3>
-        <h3><a>constitution</a></h3>
-        <h3><a>bills</a></h3>
-        <h3><a>members</a></h3>
-        <h4>representatives</a></h4>
-        <h3><a>settings</a></h3>
-        <br><br>
-        <h3>statutes</h3>
-        {{for statute in statutes_by_parent:}}
-            
-            <a href="/">{{=statute['title']}}</a>
-            <p>{{=statute['description']}}</p>
-            
+<div id="content">
+    <img class="img-polaroid" src="/voetr/static/images/voetr_logo.png" style="height:100px;">
+    <div id="committee-title-area">
+        <h1>{{=selected_committee[0]['title']}}</h1>
+    </div>
+    <p class="lead">{{=selected_committee[0]['description']}}</p>     
+    <div id="committee-detail-area">
+        <a href="/committee/{{=selected_committee[0]['title']}}/administration/">administration</a>
+        <a href="/committee/{{=selected_committee[0]['title']}}/bylaws/">bylaws</a>
+        <a href="/committee/{{=selected_committee[0]['title']}}/bills/">bills</a>
+        <a href="/committee/{{=selected_committee[0]['title']}}/bylaws/">moderation</a>
+        <a href="/committee/{{=selected_committee[0]['title']}}/members/">members</a>
+        <a href="/committee/{{=selected_committee[0]['title']}}/pages/">pages</a>
+        {{for position in selected_committee_positions:}}
+            {{=position['title']}}
         {{pass}}
-        <a>+ new thread</a><br><br>
-        {{for x in range(10):}}
-            <h4><a>thread {{=x}}</a></h4>
-        {{pass}}
-        <br><br>
-    
+    </div>
+    <div>
+        <div id="left">
+            Questions
+            Polls
+            Petitions
+            bills
+        </div>
+        <div>
+            {{for x in range(10):}}
+                <h4><a>thread {{=x}}</a></h4>
+            {{pass}}
+        </div>
+        <br>
+        <br>
     </div>
 </div>
+
+{{elif request.args(1) == 'bylaws':}}
+{{elif request.args(1) == 'bills':}}
+{{elif request.args(1) == 'moderation':}}
+{{elif request.args(1) == 'members':}}
+
+<h1>{{=selected_committee[0]['title']}}</h1>
+<h2>members</h2>
+{{for member in committee_member_array:}}
+
+    {{=member['username']}}<br>
+
+{{pass}}
+
+{{elif request.args(1) == 'pages':}}
+{{else:}}
+{{pass}}
