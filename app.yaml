@@ -46,6 +46,9 @@ handlers:
   script: gaehandler.py         # CGI
 #  script: gaehandler.wsgiapp    # WSGI (Python 2.7 only)
   secure: optional
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
 
 admin_console:
   pages:

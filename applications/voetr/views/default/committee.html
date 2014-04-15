@@ -17,6 +17,11 @@
 		margin-left:15px;
     }    
 </style>
+<div class="alert fade in">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>Holy guacamole!</strong> You look awesome :D.
+</div>
+
 {{if request.args(1) is None:}}
 <div id="right">
     <button class="btn">+ new thread</button><br>
@@ -29,22 +34,25 @@
     </div>
     <p class="lead">{{=selected_committee[0]['description']}}</p>     
     <div id="committee-detail-area">
-        <a href="/committee/{{=selected_committee[0]['title']}}/administration/">administration</a>
-        <a href="/committee/{{=selected_committee[0]['title']}}/bylaws/">bylaws</a>
-        <a href="/committee/{{=selected_committee[0]['title']}}/bills/">bills</a>
-        <a href="/committee/{{=selected_committee[0]['title']}}/bylaws/">moderation</a>
-        <a href="/committee/{{=selected_committee[0]['title']}}/members/">members</a>
-        <a href="/committee/{{=selected_committee[0]['title']}}/pages/">pages</a>
+        <a href="/committee/{{=selected_committee[0]['url']}}/administration/">administration</a>
+        <a href="/committee/{{=selected_committee[0]['url']}}/bylaws/">bylaws</a>
+        <a href="/committee/{{=selected_committee[0]['url']}}/bills/">bills</a>
+        <a href="/committee/{{=selected_committee[0]['url']}}/bylaws/">moderation</a>
+        <a href="/committee/{{=selected_committee[0]['url']}}/members/">members</a>
+        <a href="/committee/{{=selected_committee[0]['url']}}/pages/">pages</a>
         {{for position in selected_committee_positions:}}
             {{=position['title']}}
         {{pass}}
     </div>
     <div>
         <div id="left">
-            Questions
-            Polls
-            Petitions
-            bills
+            Questions<br>
+            Polls<br>
+            Petitions<br>
+            bills<br>
+            givingfor project<br>
+            conexus project<br>
+
         </div>
         <div>
             {{for x in range(10):}}
@@ -61,13 +69,11 @@
 {{elif request.args(1) == 'moderation':}}
 {{elif request.args(1) == 'members':}}
 
-<h1>{{=selected_committee[0]['title']}}</h1>
-<h2>members</h2>
-{{for member in committee_member_array:}}
-
-    {{=member['username']}}<br>
-
-{{pass}}
+    <h1>{{=selected_committee[0]['title']}}</h1>
+    <h2>members</h2>
+    {{for member in committee_member_array:}}
+        {{=member['username']}}<br>
+    {{pass}}
 
 {{elif request.args(1) == 'pages':}}
 {{else:}}

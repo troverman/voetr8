@@ -23,10 +23,18 @@
 		background-color:rgb(200,200,200);
     }  
 </style>
-
+<div class="alert fade in">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<strong>Holy guacamole!</strong> You look awesome :D.
+</div>
+      
 <div id="left">
-	committee filters<br>
-	tags<br>
+	official<br>
+	location / geolocate<br>
+	tag form<br>
+	{{for x in range(30):}}
+		tags<br>
+	{{pass}}
 	1<br>
 	2<br>
 	3<br>
@@ -35,6 +43,17 @@
 
 <div id="right">
 	<button class="btn">+ new committee</button>
+
+	<br><br><br>
+	<div style="border:1px solid rgb(235,235,235);background-color:rgb(246,250,255);padding:15px;" id="ad_block">
+        <a class="close" id="close-ad" href="#">&times;</a>
+        <div id="promoted_list">
+            {{for thread in range(5):}}
+                <a href="/thread/{{=thread}}"><h5>promoted {{=thread}}</h5></a>
+            {{pass}}          
+        </div>
+    <br>
+    </div>
 </div>
 
 <h1>committees</h1><hr><br>
