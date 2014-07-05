@@ -1,24 +1,78 @@
 {{extend 'layout.html'}}
 <style type="text/css">
 
+    #left {
+		float: left;
+		width: 175px;
+		border-right:1px solid rgb(238,238,238);
+		margin-left:15px;
+    }  
 
+    #header-index-container{
+        background-color:rgb(233,233,233);
+        border-bottom:1px solid rgb(201,201,201);
+    }
+    #header-index{
+        margin-left:6%;
+        margin-right:6%;
+    }  
 
 </style>
+<div id="header-index-container">
+    <div id="header-index">
+        <br>
+        <img src="/voetr/static/images/noimage-icon.png" class="img-polaroid" style="float:left;height:64px;"/>
+        <h3 style="float:left;color:rgb(80, 84, 92);font-size:45px;margin-left:15px;">{{=member_from_url['username']}}</h3>
+		<p class="lead" style="float:left;margin-left:15px;margin-top:19px;">( {{=member_from_url['first_name']}} {{=member_from_url['last_name']}} )</p>
+
+		<p class="btn" style="float:right;">follow</p>
+		<p class="btn" style="float:right;"><i class="fa fa-cog"></i></p>
+
+		<div style="clear:both"></div>
+
+        <br>
+    </div>
+</div>
 
 
-<h1>{{=request.args(0)}}</h1><hr>
+
+<div id="left">
+	<i class="fa fa-th"></i> committees<br><br>
+
+	positions
+
+	followers <br><br>
+	following <br><br>
+
+
+</div>
 
 
 
-picture<br><br>
+
+<div>
+about, feed/wall, content, votes, posts, 
+
+
 
 wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
+wall<br><br>
 
-followers <br><br>
-following <br><br>
-
-about, feed/wall, content, votes, posts, committees, positions
 
 
 
-comment on activity vs comment on thread
+
+
+</div>

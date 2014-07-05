@@ -83,11 +83,30 @@ db.define_table('committee',
 )
 
 ################################
+####committee_image#############
+################################  
+db.define_table('committee_image',
+    Field('committee_id', 'string', readable=False, writable=False),
+    Field('image_order','string'),
+    Field('image_type','string'),
+    Field('picture', 'upload', uploadfield='picture_file'),
+    Field('picture_file', 'blob')
+)
+
+################################
 ####committee_member############
 ################################ 
 db.define_table('committee_member',
     Field('committee_id','string'),
     Field('member_id','string'),
+)
+
+################################
+####committee_tag###############
+################################ 
+db.define_table('committee_tag',
+    Field('committee_id','string'),
+    Field('tag','string'),
 )
 
 ################################

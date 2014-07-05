@@ -35,9 +35,6 @@
 .icon-accessibility:before {
 	content: "\e603";
 }
-.icon-fire:before {
-	content: "\e604";
-}
 .icon-food:before {
 	content: "\e605";
 }
@@ -91,7 +88,4 @@
 }
 .icon-stats:before {
 	content: "\e619";
-}
-.icon-search:before {
-	content: "\e60e";
 }

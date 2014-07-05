@@ -1,7 +1,3 @@
 blacklist:
 - subnet: 5.10.83.32
   description: stupid spammer
-- subnet: 5.10.83.*
-  description: stupid spammer
-
-

@@ -1,5 +1,11 @@
 if request.function == 'index':
     response.title = 'voetr'
+elif request.function == 'member':
+	response.title = request.args(0)
+elif request.function == 'committee':
+	response.title = request.args(0).replace('-',' ')
+
+
 else:
     response.title = request.function
 

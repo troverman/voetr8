@@ -32,8 +32,10 @@ def committee():
         redirect(URL('committees'))
 
     committee_member_array=[]
+
     selected_committee = db(db.committee.url == request.args(0)).select()
     selected_committee_positions = db(db.committee_position.committee_id == selected_committee[0]['id']).select()
+    committee_images = db(db.committee_image.committee_id == selected_committee[0]['id']).select()
 
     if request.args(1) == 'members':
         committee_members = db(db.committee_member.committee_id == selected_committee[0]['id']).select()
@@ -45,6 +47,7 @@ def committee():
         selected_committee=selected_committee,
         selected_committee_positions=selected_committee_positions,
         committee_member_array=committee_member_array,
+        committee_images=committee_images,
     
     )
 
@@ -53,7 +56,13 @@ def committee():
 ################################
 def committees():
     
-    committee_list = db(db.committee).select().as_list()
+    committee_list = db(db.committee).select(limitby=(0, 25)).as_list()
+
+    committee_tag_array = []
+    for committee in committee_list:
+        committee_tag_array.append(db(db.committee_tag.committee_id == committee['id']).select())
+
+
     import random
     random.shuffle(committee_list)
     rand_committee_list = committee_list[0:5]
@@ -62,6 +71,7 @@ def committees():
     return dict(
         committee_list=committee_list,
         rand_committee_list=rand_committee_list, 
+        committee_tag_array=committee_tag_array,
     )
 
 ################################
@@ -76,7 +86,20 @@ def contact():
 ################################
 def discover():
 
-    return dict()
+    from gluon.tools import fetch
+    from gluon.tools import geocode
+    address = '310 Mcmasters Street, Chapel Hill, NC, USA'
+    (latitude, longitude) = geocode(address)
+    url = 'http://openstates.org/api/v1//legislators/geo/?lat=' + str(latitude) + '&long=' + str(longitude) + '&apikey=c16a6c623ee54948bac2a010ea6fab70'
+    url1 = 'http://congress.api.sunlightfoundation.com//legislators/locate?latitude=' + str(latitude) + '&longitude=' + str(longitude) + '&apikey=c16a6c623ee54948bac2a010ea6fab70'
+    page = fetch(url)
+    page1 = fetch(url)
+
+    import gluon
+    data_list = gluon.contrib.simplejson.loads(page)
+    data_list1 = gluon.contrib.simplejson.loads(page)
+
+    return dict(data_list=data_list,data_list1=data_list1,)
     
 ################################
 ####faq#########################
@@ -104,7 +127,7 @@ def index():
 
     member_len = len(db(db.auth_user).select().as_list())
 
-    response.flash = T("let's change the world! :)")
+    #response.flash = T("let's change the world! :)")
     return dict(
         committee_list=committee_list,
         member_len=member_len,
@@ -122,7 +145,16 @@ def logout():
 ################################
 def member():
 
-    return dict()
+    try:
+        member_from_url = db(db.auth_user.username == request.args(0)).select()[0]
+        member_committees = db(db.committee_member.member_id == member_from_url['id']).select()
+
+    except IndexError:
+        redirect(URL('index'))
+
+    return dict(
+        member_from_url=member_from_url,
+    )
     
 ################################
 ####mission#####################
@@ -227,3 +259,22 @@ def data():
       LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
     """
     return dict(form=crud())
+
+
+################################################################
+####ajax########################################################
+################################################################
+
+################################
+####ajax_join_event#############
+################################                     
+def ajax_join_committee():
+    committee_id = int(request.vars.id)
+        
+    #LOGIC
+    if auth.user_id is not None:
+        db.committee_member.insert(member_id = auth.user_id, committee_id = committee_id)
+    jquery = "jQuery('.flash').html('joined committee').slideDown().delay(1000).slideUp();"
+
+    return jquery 
+

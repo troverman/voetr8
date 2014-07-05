@@ -1,8 +1,9 @@
 {{extend 'layout.html'}}
 <style>     
-    #content{width: 100%;margin-left:6%;}    
+    #content{margin-left:6%;}    
     #committee-detail-area{border:1px solid rgb(211,217,231);background-color:rgb(247,247,247);}
-    #committee-title-area{}
+    #committee-header-area{border:1px solid rgb(211,217,231);background-color:rgb(247,247,247);}
+    #committee-title-area{float:left;margin-left:15px;}
     #right { 
         float: right;
         width: 255px;
@@ -15,66 +16,133 @@
 		width: 175px;
 		border-right:1px solid rgb(238,238,238);
 		margin-left:15px;
-    }    
+    }  
+    #member-list{margin-left:10%;margin-right:10%;}  
 </style>
-<div class="alert fade in">
-    <button type="button" class="close" data-dismiss="alert">×</button>
-    <strong>Holy guacamole!</strong> You look awesome :D.
+<div id="committee-header-area" style="max-height:100px;">
+    <br>
+    <div style="margin-left:4%;">
+        <!--{{for image in committee_images:}}
+            <a href="/committee/{{=selected_committee[0]['url']}}/"><img src="{{=URL('download',args=image['picture'])}}" style="height:128px;float:left" class="img-polaroid" /></a>
+        {{pass}}-->
+        {{try:}}
+            <a href="/committee/{{=selected_committee[0]['url']}}/"><img src="{{=URL('download',args=committee_images[0]['picture'])}}" style="height:128px;float:left" class="img-polaroid" /></a>
+        {{except IndexError:}}
+            <a href="/committee/{{=selected_committee[0]['url']}}/"><img src="/conexus/static/images/noimage-icon.png" style="height:128px;float:left" class="img-polaroid" /></a>
+
+        {{pass}}
+        <div id="committee-title-area">
+            <h1><a href="/committee/{{=selected_committee[0]['url']}}/">{{=selected_committee[0]['title']}}</a></h1>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <br>
 </div>
 
 {{if request.args(1) is None:}}
 <div id="right">
     <button class="btn">+ new thread</button><br>
-    <button class="btn">join</button><br>
+
+    <div class="committee-join" id="join-committee-{{=selected_committee[0]['id']}}" style="float:left;margin-right:10px;">
+        <form style="display:none"><input type="hidden" id="" name="id" value="{{=selected_committee[0]['id']}}" /></form> 
+        <a onclick="ajax('/ajax_join_committee/', ['id'], ':eval');">
+            <h5 class="btn">join</h5>      
+        </a>
+    </div>
+
+    {{for x in range(20):}}
+        <p class="lead">hello</p>
+    {{pass}}
+
 </div>
 <div id="content">
-    <img class="img-polaroid" src="/voetr/static/images/voetr_logo.png" style="height:100px;">
-    <div id="committee-title-area">
-        <h1>{{=selected_committee[0]['title']}}</h1>
-    </div>
     <p class="lead">{{=selected_committee[0]['description']}}</p>     
-    <div id="committee-detail-area">
-        <a href="/committee/{{=selected_committee[0]['url']}}/administration/">administration</a>
-        <a href="/committee/{{=selected_committee[0]['url']}}/bylaws/">bylaws</a>
-        <a href="/committee/{{=selected_committee[0]['url']}}/bills/">bills</a>
-        <a href="/committee/{{=selected_committee[0]['url']}}/bylaws/">moderation</a>
-        <a href="/committee/{{=selected_committee[0]['url']}}/members/">members</a>
-        <a href="/committee/{{=selected_committee[0]['url']}}/pages/">pages</a>
-        {{for position in selected_committee_positions:}}
-            {{=position['title']}}
-        {{pass}}
-    </div>
     <div>
         <div id="left">
-            Questions<br>
-            Polls<br>
-            Petitions<br>
-            bills<br>
-            givingfor project<br>
-            conexus project<br>
-
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/bylaws/"><i style="margin-right:15px;" class="fa fa-book"></i> bylaws</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/bills/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> bills</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/bills/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> budget</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/committees/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> committees</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/discussion/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> discussion</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/members/"><i style="margin-right:15px;" class="fa fa-users"></i> members</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/moderation/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> moderation</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/pages/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> pages</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/settings/"><i style="margin-right:15px;" class="fa fa-book"></i> settings</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/givingfor/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> givingfor</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/conexus/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> conex.us</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/polls/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> polls</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/questions/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> questions</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/petitions/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> petitions</a></h5>
+        <h5><a href="/committee/{{=selected_committee[0]['url']}}/register/"><i style="margin-right:15px;" class="fa fa-file-text-o"></i> register to vote</a></h5>
         </div>
-        <div>
-            {{for x in range(10):}}
-                <h4><a>thread {{=x}}</a></h4>
+        <div style="margin-left:25px;float:left;">
+            <div id="feed-container">
+            {{for x in range(100):}}
+                <div id="feed-item" class="well">
+                    <img src="" style="height:64px;"/>
+                    <h4><a>feed item{{=x}}</a></h4>
+                    <p>blah blah blah blah blah blah</p>
+                </div>
             {{pass}}
+            </div>
         </div>
+        <div style="clear:both"></div>
+        <p class="lead">more</p>
         <br>
         <br>
     </div>
 </div>
 
 {{elif request.args(1) == 'bylaws':}}
-{{elif request.args(1) == 'bills':}}
-{{elif request.args(1) == 'moderation':}}
-{{elif request.args(1) == 'members':}}
 
-    <h1>{{=selected_committee[0]['title']}}</h1>
-    <h2>members</h2>
-    {{for member in committee_member_array:}}
-        {{=member['username']}}<br>
+    {{for x in range(50):}}
+        bylaw {{=x}}, proposition, vote, comment<br>
     {{pass}}
 
+
+{{elif request.args(1) == 'bills':}}
+
+    {{for x in range(50):}}
+        bill {{=x}}, vote<br>
+    {{pass}}
+
+{{elif request.args(1) == 'discussion':}}
+    <p>tags</p>
+    {{for x in range(50):}}
+        discussion {{=x}}, like, dislike<br>
+    {{pass}}
+
+{{elif request.args(1) == 'moderation':}}
+{{elif request.args(1) == 'members':}}
+    <div style="background-color:rgb(225,225,225)">
+        <h2 style="margin-left:1%;display:inline-block">members</h2><hr>
+    </div>
+    <div id="committee-detail-area">
+        {{for position in selected_committee_positions:}}
+            {{=position['title']}}
+        {{pass}}
+    </div>
+    <br><br>
+    <div id="member-list">
+        {{for member in committee_member_array:}}
+            <div id="member-list-item">
+                <a href="/member/{{=member['username']}}/"><img src="/" style="height:32px;float:left" class="img-polaroid" /></a>
+                <a href="/member/{{=member['username']}}/">{{=member['username']}}</a>
+                <a>position</a>
+                <p>detail</p>
+            </div>
+        {{pass}}
+    </div>
+
 {{elif request.args(1) == 'pages':}}
+{{elif request.args(1) == 'polls':}}
+    <p>filters / types</p>
+    {{for x in range(50):}}
+        poll {{=x}}, like, dislike, options...<br>
+    {{pass}}
+
 {{else:}}
 {{pass}}
+
+
+<br><br><br><br>

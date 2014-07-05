@@ -1,6 +1,14 @@
 {{extend 'layout.html'}}
 
-<style>     
+<style>   
+	#header-index-container{
+        background-color:rgb(233,233,233);
+        border-bottom:1px solid rgb(201,201,201);
+    }
+    #header-index{
+        margin-left:6%;
+        margin-right:6%;
+    }  
     #contentwrapper{width: 100%;}    
     #content {}
     #right { 
@@ -17,32 +25,33 @@
 		margin-left:15px;
     }  
     #committee-list{margin-left:15px;}
+    #committee-list-item{float:left; margin-left:15px;}
+
     #reccomended-committees{
 		margin-left:15px;
 		border:1px solid rgb(100,100,100);
-		background-color:rgb(200,200,200);
+		background-color:rgb(240,240,240);
     }  
 </style>
-<div class="alert fade in">
-	<button type="button" class="close" data-dismiss="alert">×</button>
-	<strong>Holy guacamole!</strong> You look awesome :D.
+<div id="header-index-container">
+    <div id="header-index">
+        <br><h3 style="color:rgb(80, 84, 92);font-size:45px;float:left;"><i class="fa fa-th"></i> committees</h3>
+        <button class="btn" style="float:right;">+ new committee</button>
+        <div style="clear:both"></div>
+		<br>
+    </div>
 </div>
-      
+
 <div id="left">
 	official<br>
 	location / geolocate<br>
 	tag form<br>
-	{{for x in range(30):}}
-		tags<br>
+	{{for tag in committee_tag_array:}}
+		{{=tag}}<br>
 	{{pass}}
-	1<br>
-	2<br>
-	3<br>
-	4<br>
 </div>
 
 <div id="right">
-	<button class="btn">+ new committee</button>
 
 	<br><br><br>
 	<div style="border:1px solid rgb(235,235,235);background-color:rgb(246,250,255);padding:15px;" id="ad_block">
@@ -56,28 +65,34 @@
     </div>
 </div>
 
-<h1>committees</h1><hr><br>
 
 <div id="contentwrapper">
     <div id="content">
     	
-		<div id="reccomended-committees">
+		<!--<div id="reccomended-committees">
 			{{for committee in rand_committee_list:}}
 				<h5><a href="/committee/{{=committee['url']}}">{{=committee['title']}}</a></h5>
 			{{pass}}
-		</div>
+		</div>-->
 
 		<div id="committee-list">
 		    {{for committee in committee_list:}}
-		    	<h5><a href="/committee/{{=committee['url']}}/">{{=committee['title']}}</a></h5>
+				<br><br>
+			    <div id="committee-list-item">
+			    	<img src="" style="width:64px;float:left;margin-left:15px" class="img-polaroid" />
+			    	<h5 style="float:left;margin-left:15px;"><a href="/committee/{{=committee['url']}}/">{{=committee['title']}}</a></h5>
+			    </div>
+				<br><br><br><br><br><hr>
 		    {{pass}}
 		</div>
+
+		<p class="lead" style="text-align:center;"><a>more</a></p>
 
 	</div>
 </div>
 
 
-
+<div style="clear:both;"></div>
 <br>
 <br>
 <br>

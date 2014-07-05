@@ -43,6 +43,7 @@
     html, body {
       height: 100%;
     }
+    body{min-width:1056px;}
     .centered-width{
       margin-left:6%;
       margin-right:6%;
@@ -100,7 +101,7 @@
       margin-top:-15px;
       margin-bottom:-20px;
     }
-    #logo-voetr:hover{//background-color:rgb(77,77,77);}
+    #logo-voetr:hover{padding-right:3px;//background-color:rgb(77,77,77);}
     #main-content{border-top:3px solid rgb(211,217,231);}
     #member-icon-area{
       float:right;
@@ -168,7 +169,7 @@
   <!-- containter ================================================== -->
   <div class="container">
     <!-- navbar ================================================== -->
-    <div class="navbar navbar-inverse navbar-fixed-top" style="position:relative;">
+    <div class="navbar navbar-inverse navbar-static-top" style="min-width:1056px;">
       <div class="flash">{{=response.flash or ''}}</div>
       <div class="navbar-inner" style="background-image:linear-gradient(to bottom, rgb(61,65,74), rgb(65,65,66));border-bottom:0px solid rgb(210,210,210);height:50px;">
         <div class="" id="site-header">
@@ -178,28 +179,9 @@
             </a>
           </div>
           <div id="header-icons" style="margin-top:19px;margin-left:7px;float:left;">
-            <a href="/discover"><i id="discover-icon" class="fa fa-random"></i></a>
-            <a href="/committees"><i id="academies-icon" class="fa fa-th"></i></a>
-            <a href="/feed"><i id="feed-icon" class="fa fa-align-justify"></i></a>
-
-          </div>
-          <div id="header-search" style="float:left;margin-left:20px;margin-top:23px;display:none;">
-            <div class="input-append">
-              <input type="text">
-              <div class="btn-group" style="margin-top:0px;">
-                <button class="btn" tabindex="-1"><i class="icon-search"></i></button>
-                <button class="btn dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                </ul>            
-              </div>
-            </div>
+            <a href="/discover/" style="margin-left:15px;color:rgb(200,200,200);"><i id="discover-icon" class="fa fa-random"> discover</i></a>
+            <a href="/committees/" style="margin-left:15px;color:rgb(200,200,200);"><i id="academies-icon" class="fa fa-th"> committees</i></a>
+            <a href="/feed/" style="margin-left:15px;color:rgb(200,200,200);"><i id="feed-icon" class="fa fa-align-justify"> feed</i></a>
           </div>
           {{if auth.is_logged_in():}}
             <ul id="member-name-area" class="nav pull-right nav_bar">
@@ -244,6 +226,12 @@
               <a data-toggle="modal" href="#login-or-signup" id="login-area">Login or Signup</a>
             </ul>
           {{pass}}
+          <div id="search-bar" style="float:right;margin-right:30px;margin-top:9px;">
+            <div class="input-prepend">
+              <span class="add-on"><i class="icon-search"></i></span>
+              <input class="span2" id="prependedInput" type="text" placeholder="search">
+            </div>    
+          </div>
         </div>
       </div>
     </div>
